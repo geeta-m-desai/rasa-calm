@@ -1,0 +1,22 @@
+recipe: default.v1
+
+language: en
+
+pipeline:
+- name: LLMCommandGenerator
+  llm:
+    model_name: gpt-4
+    request_timeout: 7
+    max_tokens: 256
+    prompt_template: "You are a friendly chatbot assistant for elderly users. Be informative and compassionate in your responses. \nUser: {text} \n Chatbot:"
+
+  #- name: ResponseSelector
+  #  random_seed: 666
+  #  epochs: 1
+- name: EntitySynonymMapper
+
+policies:
+- name: FlowPolicy
+- name: rasa_plus.ml.IntentlessPolicy
+  nlu_abstention_threshold: 0.5
+assistant_id: 20240223-114328-mitram-cares
