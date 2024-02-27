@@ -1,7 +1,7 @@
-version: "3.2"
+version: "3.1"
 
 stories:
-- story: greet and handle other queries
+- story: Mitram greet and handle other queries
   steps:
   - intent: greet
   - action: hello_world

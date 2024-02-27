@@ -1,6 +1,6 @@
 flows:
   hello_world:
-    description: Mitram Greet
+    description: Mitram greet
     name: greet
     steps:
       - action: hello_world

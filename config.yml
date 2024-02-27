@@ -10,10 +10,6 @@ pipeline:
     max_tokens: 256
     prompt_template: "You are a friendly chatbot assistant for elderly users. Be informative and compassionate in your responses. \nUser: {text} \n Chatbot:"
 
-  #- name: ResponseSelector
-  #  random_seed: 666
-  #  epochs: 1
-- name: EntitySynonymMapper
 
 policies:
 - name: FlowPolicy
