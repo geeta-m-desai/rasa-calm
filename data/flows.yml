@@ -4,8 +4,8 @@ flows:
     name: greet
     steps:
       - action: hello_world
-  mitram_pattern_search:
-    description: Mitram Addressing FAQ
-    name: mitram_pattern search
-    steps:
-      - action: hello_world
+#  mitram_pattern_search:
+#    description: Mitram Addressing FAQ
+#    name: mitram_pattern search
+#    steps:
+#      - action: hello_world

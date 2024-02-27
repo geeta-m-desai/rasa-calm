@@ -4,7 +4,4 @@ stories:
 - story: greet and handle other queries
   steps:
   - intent: greet
-    action: hello_world
-  - intent: /.*
-    action: llm_command_generator
-
+  - action: hello_world

@@ -18,5 +18,5 @@ pipeline:
 policies:
 - name: FlowPolicy
 - name: rasa_plus.ml.IntentlessPolicy
-  nlu_abstention_threshold: 0.5
+  nlu_abstention_threshold: 0.2
 assistant_id: 20240223-114328-mitram-cares
