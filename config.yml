@@ -3,12 +3,21 @@ recipe: default.v1
 language: en
 
 pipeline:
+- name: WhitespaceTokenizer
+- name: LexicalSyntacticFeaturizer
+- name: CountVectorsFeaturizer
+  analyzer: "char_wb"
+  min_ngram: 1
+  max_ngram: 4
+- name: DIETClassifier # Adds embeddings
+  epochs: 100
+- name: EntitySynonymMapper
+
 - name: LLMCommandGenerator
   llm:
     model_name: gpt-4
     request_timeout: 7
     max_tokens: 256
-    prompt_template: "You are a friendly chatbot assistant for elderly users. Be informative and compassionate in your responses. \nUser: {text} \n Chatbot:"
 
 
 policies:
