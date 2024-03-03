@@ -1,23 +1,20 @@
+from rasa_plus.core.policies.knowledge import (KnowledgeAnswerCommand)
 import openai
-from rasa_plus.core.policies.knowledge import KnowledgeAnswerCommand
-
-# ... other imports and setup ...
+import os
 
 class CustomKnowledgeAnswerCommand(KnowledgeAnswerCommand):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
+        openai.api_key = os.getenv("OPENAI_API_KEY")  # Fetch from environment
 
     def predict_commands(self, message):
         user_question = message.data['text']
 
         response = openai.Completion.create(
-            engine="gpt4-turbo",  # Or another suitable OpenAI model
+            engine="gpt4-turbo",
             prompt=user_question,
-            max_tokens=150,  # Adjust as needed
-            # ... other parameters (temperature, etc.)
+            max_tokens=150,  # Adjust if needed
         )
 
         llm_answer = response.choices[0].text.strip()
-
         return StartFlowCommand(flow='respond_to_question', flow_data={'answer': llm_answer})
