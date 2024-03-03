@@ -25,4 +25,8 @@ policies:
 - name: FlowPolicy
 - name: rasa_plus.ml.IntentlessPolicy
   nlu_abstention_threshold: 0.2
+- name: rasa_plus.core.policies.knowledge.CustomKnowledgeAnswerCommand
+- name: MappingPolicy
+  triggers:
+      - /ask_question  # Or the name of your question-asking intent
 assistant_id: 20240223-114328-mitram-cares

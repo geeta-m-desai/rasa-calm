@@ -9,6 +9,10 @@ stories:
   steps:
   - intent: get_news
   - action: action_fetch_news
+- story: ask any questions
+  steps:
+  - intent: ask_question
+  - action: CustomKnowledgeAnswerCommand
 
 
 
