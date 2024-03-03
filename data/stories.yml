@@ -5,3 +5,10 @@ stories:
   steps:
   - intent: greet
   - action: hello_world
+- story: get_news_headlines
+  steps:
+  - intent: get_news
+  - action: action_fetch_news
+
+
+

@@ -4,7 +4,11 @@ flows:
     name: greet
     steps:
       - action: hello_world
-#  mitram_pattern_search:
+  read_news_flow:
+    description: news
+    name: news
+    steps:
+      - action: action_fetch_news
 #    description: Mitram Addressing FAQ
 #    name: mitram_pattern search
 #    steps:

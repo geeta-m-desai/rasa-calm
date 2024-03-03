@@ -15,3 +15,9 @@ nlu:
     - howdy
     - what's up
     - yo
+- intent: get_news
+  examples: |
+      - fetch news
+      - read news
+      - get news
+      - obtain news 
