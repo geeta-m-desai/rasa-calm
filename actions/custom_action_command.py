@@ -1,6 +1,7 @@
-from rasa_plus.core.policies.knowledge import (KnowledgeAnswerCommand)
+from rasa.dialogue_understanding.commands.knowledge import (KnowledgeAnswerCommand)
 import openai
 import os
+
 
 class CustomKnowledgeAnswerCommand(KnowledgeAnswerCommand):
     def __init__(self, *args, **kwargs):

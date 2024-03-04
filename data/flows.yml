@@ -12,10 +12,6 @@ flows:
   respond_to_question:
     description: ask any questions
     name: questions
-    source:
-      intent: ask_question  # Or your question-asking intent
-      stages:
-        - stage: respond
     steps:
         - action: utter_answer
 #    description: Mitram Addressing FAQ
