@@ -1,21 +1,33 @@
-from rasa.dialogue_understanding.commands.knowledge import (KnowledgeAnswerCommand)
-import openai
 import os
+import openai
+from rasa_sdk import Action
 
 
-class CustomKnowledgeAnswerCommand(KnowledgeAnswerCommand):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        openai.api_key = os.getenv("OPENAI_API_KEY")  # Fetch from environment
+class CustomKnowledgeAnswerCommand(Action):
+    def name(self):
+        return "action_custom_knowledge_answer"
 
-    def predict_commands(self, message):
-        user_question = message.data['text']
+    def __init__(self):
+        openai.api_key = os.getenv("OPENAI_API_KEY")
 
-        response = openai.Completion.create(
-            engine="gpt4-turbo",
-            prompt=user_question,
-            max_tokens=150,  # Adjust if needed
-        )
+    def run(self, dispatcher, tracker, domain):
 
-        llm_answer = response.choices[0].text.strip()
-        return StartFlowCommand(flow='respond_to_question', flow_data={'answer': llm_answer})
+        user_query = tracker.latest_message  # Assuming the query is in the latest message
+
+        try:
+            response = openai.Completion.create(
+                engine="text-davinci-003",  # Replace with your desired model
+                prompt=user_query,
+                max_tokens=100,  # Adjust as needed
+                n=1,
+                stop=None,
+                temperature=0.5,  # Adjust for creativity
+            )
+
+            answer = response.choices[0].text.strip()
+            dispatcher.utter_message(text=answer)
+
+        except openai.error.APIError as e:
+            dispatcher.utter_message(text="Error fetching answer: {e}")
+
+        return []
