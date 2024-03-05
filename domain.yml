@@ -6,4 +6,4 @@ intents:
 actions:
   - hello_world
   - action_fetch_news
-  - utter_answer
+  - action_utter_answer

@@ -20,4 +20,15 @@ nlu:
       - fetch news
       - read news
       - get news
-      - obtain news 
+      - obtain news
+- intent: ask_question
+  examples: |
+      - question
+      - query 
+      - response 
+      - ambiguity
+      - help
+      - knowledge 
+      - Answer 
+      - Share 
+
