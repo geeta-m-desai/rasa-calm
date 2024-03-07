@@ -12,7 +12,7 @@ stories:
 - story: ask any questions
   steps:
   - intent: ask_question
-  - action: CustomKnowledgeAnswerCommand
+  - action: action_custom_knowledge_answer
 
 
 

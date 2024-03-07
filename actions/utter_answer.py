@@ -1,4 +1,5 @@
 from rasa_sdk import Action
+import pdb
 
 
 class ActionUtterAnswer(Action):
@@ -9,7 +10,7 @@ class ActionUtterAnswer(Action):
     def run(self, dispatcher,
             tracker,
             domain):
+
         answer = tracker.get_slot("answer")  # Get the answer from the slot
         dispatcher.utter_message(text=answer)
-
         return []  # End the action

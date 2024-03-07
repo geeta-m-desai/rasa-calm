@@ -1,4 +1,6 @@
 import os
+
+
 import openai
 from rasa_sdk import Action
 
@@ -12,19 +14,21 @@ class CustomKnowledgeAnswerCommand(Action):
 
     def run(self, dispatcher, tracker, domain):
 
-        user_query = tracker.latest_message  # Assuming the query is in the latest message
+        user_query = tracker.latest_message.get('text')  # Assuming the query is in the latest message
 
         try:
-            response = openai.Completion.create(
-                engine="text-davinci-003",  # Replace with your desired model
-                prompt=user_query,
-                max_tokens=100,  # Adjust as needed
-                n=1,
-                stop=None,
-                temperature=0.5,  # Adjust for creativity
+            # Convert to openAI messages format
+            messages = [
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": user_query},
+            ]
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=messages
             )
 
-            answer = response.choices[0].text.strip()
+            answer = response['choices'][0]['message']['content']
+            print("answer", answer)
             dispatcher.utter_message(text=answer)
 
         except openai.error.APIError as e:

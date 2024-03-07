@@ -13,8 +13,4 @@ flows:
     description: ask any questions
     name: questions
     steps:
-        - action: action_utter_answer
-#    description: Mitram Addressing FAQ
-#    name: mitram_pattern search
-#    steps:
-#      - action: hello_world
+        - action: action_custom_knowledge_answer

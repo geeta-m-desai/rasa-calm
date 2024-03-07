@@ -21,7 +21,7 @@ nlu:
       - read news
       - get news
       - obtain news
-- intent: ask_question
+- intent: respond_to_question
   examples: |
       - question
       - query 
