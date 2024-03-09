@@ -9,8 +9,23 @@ flows:
     name: news
     steps:
         - action: action_fetch_news
-  respond_to_question:
+  answer_to_question:
     description: ask any questions
     name: questions
     steps:
         - action: action_custom_knowledge_answer
+  read_weather_updates:
+    description: weather
+    name: weather
+    steps:
+      - action: action_fetch_weather
+  schedule_reminders:
+    description: reminder
+    name: reminder
+    steps:
+      - action: action_schedule_medication_reminder
+  reminder_callback:
+    description: external reminder callback
+    name: external reminder callback
+    steps:
+      - action: action_notify_medication

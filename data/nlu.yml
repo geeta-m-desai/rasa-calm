@@ -21,14 +21,19 @@ nlu:
       - read news
       - get news
       - obtain news
-- intent: respond_to_question
+- intent: schedule_medication
   examples: |
-      - question
-      - query 
-      - response 
-      - ambiguity
-      - help
-      - knowledge 
-      - Answer 
-      - Share 
-
+    - I want to set my daily medication reminder
+    - Please remind me to take my medication
+    - Set a daily reminder for my medication
+- intent: EXTERNAL_reminder_callback
+  examples: |
+    - EXTERNAL reminder callback
+    - EXTERNAL reminder 
+    - EXTERNAL callback
+- intent: ask_question
+  examples: |
+    - ask any question
+    - Inquiry
+    - Queries 
+    - Doubts 

@@ -13,6 +13,10 @@ stories:
   steps:
   - intent: ask_question
   - action: action_custom_knowledge_answer
+- story: Schedule medication reminder
+  steps:
+    - intent: schedule_medication
+    - action: action_schedule_medication_reminder
 
 
 
