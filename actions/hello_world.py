@@ -6,11 +6,12 @@
 #
 #
 # This is a simple example for a custom action which utters "Hello World!"
-
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
+
+from actions.voice_handling import receive_and_speak_response
 
 
 class HelloWorld(Action):
@@ -23,7 +24,7 @@ class HelloWorld(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         # dispatcher.utter_message(text="Hello World! from MitramCares!!")
-
-        dispatcher.utter_message(text="Hello World! from MitramCares!! Is there anything I can help you with today?")
-
+        text = "Hello World! from MitramCares!! Is there anything I can help you with today?"
+        # dispatcher.utter_message(text)
+        receive_and_speak_response(text)
         return []

@@ -18,7 +18,7 @@ class ActionScheduleMedicationReminder(Action):
         try:
             dispatcher.utter_message("I will remind you in 5 seconds.")
 
-            date = datetime.datetime.now() + datetime.timedelta(seconds=5)
+            date = datetime.datetime.now() + datetime.timedelta(minutes=1)
             entities = tracker.latest_message.get("entities")
             print("entities ===> ", entities)
 
@@ -29,6 +29,7 @@ class ActionScheduleMedicationReminder(Action):
                 name="my_reminder",
                 kill_on_user_message=False,
             )
+            print("reminder ===> ", reminder)
             return [reminder]
         except Exception as e:
             dispatcher.utter_message(text=f"An exception occurred: {str(e)}")
