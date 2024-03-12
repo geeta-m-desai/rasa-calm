@@ -24,7 +24,7 @@ class HelloWorld(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         # dispatcher.utter_message(text="Hello World! from MitramCares!!")
-        text = "Hello World! from MitramCares!! Is there anything I can help you with today?"
+        text = "Warm greetings from MitramCares! I'm your friendly helper. How can I make things easier for you today?"
         # dispatcher.utter_message(text)
         receive_and_speak_response(text)
         return []
