@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MitramCares</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        var socket = io('http://localhost:8080');
+        socket.on('bot_response', function(data) {
+        var audioBlob = new Blob([data.audio], { type: 'audio/wav' }); // Assuming WAV format
+        var audioURL = URL.createObjectURL(audioBlob);
+        var audio = new Audio(audioURL);
+        audio.play();
+    });
+    </script>
+
+<script>
+   function startRecording(language) {
+       navigator.mediaDevices.getUserMedia({ audio: true })
+           .then(stream => {
+               const mediaRecorder = new MediaRecorder(stream);
+               mediaRecorder.start();
+
+               let chunks = [];
+               mediaRecorder.onstart = e => {
+                   console.log("Started REcording " )
+               }
+               mediaRecorder.ondataavailable = e => chunks.push(e.data);
+                console.log("chunks ", chunks)
+               mediaRecorder.onstop = e => {
+                   const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' }); // Or other audio format
+                   console.log("Recording:", blob);
+                   socket.emit('audio_data', {blob, language: language}, (response) => {
+                    // Handle potential errors and responses from the server
+                       console.log("response ",response )
+                    });
+               };
+
+               setTimeout(() => mediaRecorder.stop(), 3000); // Stop after 3 sec
+           })
+           .catch(console.error);
+   }
+</script>
+
+</head>
+<body>
+    <button onclick="startRecording('hi-IN')">Speak In Hindi</button>
+    <button onclick="startRecording('kn-IN')">Speak In Kannada</button>
+    <button onclick="startRecording('mr-IN')">Speak In Marathi</button>
+    <button onclick="startRecording('en-US')">Speak In English</button>
+</body>
+</html>

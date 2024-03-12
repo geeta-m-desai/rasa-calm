@@ -21,10 +21,10 @@ class HelloWorld(Action):
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+            domain: Dict[Text, Any]) -> list[str]:
 
         # dispatcher.utter_message(text="Hello World! from MitramCares!!")
         text = "Warm greetings from MitramCares! I'm your friendly helper. How can I make things easier for you today?"
-        # dispatcher.utter_message(text)
-        receive_and_speak_response(text)
+        dispatcher.utter_message(text)
+        # receive_and_speak_response(text)
         return []

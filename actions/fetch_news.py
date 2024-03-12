@@ -45,7 +45,7 @@ class ActionFetchNews(Action):
                 for article in data["articles"][:3]:
                     summary += f"- {article['title']}: {article['description']}\n"
                 dispatcher.utter_message(text=summary)
-                receive_and_speak_response(summary)
+                # receive_and_speak_response(summary)
         else:
             dispatcher.utter_message(text="Sorry, I'm having trouble getting the news right now.")
 
