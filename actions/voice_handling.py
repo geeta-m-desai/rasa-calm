@@ -1,20 +1,20 @@
 import os
-import espeakng
+from typing import Optional
+
 import requests
 import speech_recognition as sr
+from google.cloud import texttospeech
 
 from actions.translate_text import translate_text
-from typing import Optional
-import os
-from google.cloud import texttospeech
 
 ACTION_ENDPOINT_URL = "http://localhost:5005/webhooks/rest/webhook"
 
 
-def audio_chunk_send_to_rasa(audio_chunk: bytes, sample_rate: int = 44100, sample_width: int = 2,language: Optional[str] = "kn-IN"):
+def audio_chunk_send_to_rasa(audio_chunk: bytes, sample_rate: int = 44100, sample_width: int = 2,
+                             language: Optional[str] = "kn-IN"):
     try:
         r = sr.Recognizer()
-        audio = sr.AudioData(audio_chunk,sample_rate, sample_width)
+        audio = sr.AudioData(audio_chunk, sample_rate, sample_width)
         text = r.recognize_google(audio, language=language)
         print("Recognized ", text)
         data = {"message": text}
@@ -57,22 +57,9 @@ def listen_and_send_to_rasa():
             print(f"Error sending to Rasa endpoint; {e}")
 
 
-def receive_and_speak_response_mac(response_text):
-    os.system(f"say '{response_text}'")  # macOS TTS
-
-
-def receive_and_speak_response_old(response_text, language="en"):
-    print("response_text ", response_text)
-    translated_text = translate_text(response_text, language)
-    print("translated_text ", translated_text)
-    voice = espeakng.Speaker()
-    voice.voice = language
-    voice.say(translated_text)
-
-
 def receive_and_return_response(response_text, language="kn-IN"):
     # Directly set the environment variable within the function
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/geetadesai/Downloads/mitramcares-tts-e799c0c11b42.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/geetadesai/Downloads/ultra-palisade-417016-a58005ad54b8.json"
     translated_text = translate_text(response_text, language)
     # Initialize Text-to-Speech client
     client = texttospeech.TextToSpeechClient()
@@ -96,7 +83,7 @@ def receive_and_return_response(response_text, language="kn-IN"):
 
 def receive_and_speak_response(response_text, language="mr-IN"):
     # Directly set the environment variable within the function
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/geetadesai/Downloads/mitramcares-tts-e799c0c11b42.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/geetadesai/Downloads/ultra-palisade-417016-a58005ad54b8.json"
     translated_text = translate_text(response_text, language)
     # Initialize Text-to-Speech client
     client = texttospeech.TextToSpeechClient()

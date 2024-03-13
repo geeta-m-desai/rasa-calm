@@ -17,7 +17,8 @@ from google.cloud import translate_v2 as translate
 
 
 def translate_text(text, target_language):
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/geetadesai/Downloads/mitramcares-tts-e799c0c11b42.json"
+    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/geetadesai/Downloads/mitramcares-tts-e799c0c11b42.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/geetadesai/Downloads/ultra-palisade-417016-a58005ad54b8.json"
     translate_client = translate.Client()
     result = translate_client.translate(text, target_language=target_language)
     return result['translatedText']
