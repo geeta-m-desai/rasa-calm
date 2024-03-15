@@ -4,17 +4,15 @@
     <meta charset="UTF-8">
     <title>MitramCares</title>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    <script>
-        var socket = io('http://localhost:8080');
+    <script defer>
+        var socket = io('http://35.200.207.120:8080');
         socket.on('bot_response', function(data) {
         var audioBlob = new Blob([data.audio], { type: 'audio/wav' }); // Assuming WAV format
         var audioURL = URL.createObjectURL(audioBlob);
         var audio = new Audio(audioURL);
         audio.play();
     });
-    </script>
 
-<script>
    function startRecording(language) {
        navigator.mediaDevices.getUserMedia({ audio: true })
            .then(stream => {

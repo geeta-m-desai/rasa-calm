@@ -1,16 +1,3 @@
-from googletrans import Translator
-
-
-def translate_text_old(text, target_language):
-    translator = Translator()
-    try:
-        translation = translator.translate(text, dest=target_language)
-        print("Google Translate Response:", translation)
-        return translation.text
-    except Exception as e:
-        print(f"Translation Error: {e}")
-        return None  # Or a default value
-
 
 import os
 from google.cloud import translate_v2 as translate
