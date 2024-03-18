@@ -4,7 +4,7 @@ from typing import Optional
 import requests
 import speech_recognition as sr
 from google.cloud import texttospeech
-
+import time
 from actions.translate_text import translate_text
 
 ACTION_ENDPOINT_URL = "http://localhost:5005/webhooks/rest/webhook"
@@ -15,11 +15,19 @@ def audio_chunk_send_to_rasa(audio_chunk: bytes, sample_rate: int = 44100, sampl
     try:
         r = sr.Recognizer()
         audio = sr.AudioData(audio_chunk, sample_rate, sample_width)
+        start_time = time.time()
         text = r.recognize_google(audio, language=language)
+        end_time = time.time()
+        print(f"Conversion took -1(STT)"
+              f" -->: {end_time - start_time:.2f} seconds")
+
         print("Recognized ", text)
         data = {"message": text}
+        start_time = time.time()
         response = requests.post(ACTION_ENDPOINT_URL, json=data)
         response_content = response.json()  # Extract response content
+        end_time = time.time()
+        print(f"Conversion took -2(Rasa Response) -->: {end_time - start_time:.2f} seconds")
         print("response_content --> ", response_content[0]['text'])
         audio_response = receive_and_return_response(response_content[0]['text'], language)
         return audio_response
@@ -60,7 +68,10 @@ def listen_and_send_to_rasa():
 def receive_and_return_response(response_text, language="kn-IN"):
     # Directly set the environment variable within the function
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/geetadesai/Downloads/ultra-palisade-417016-a58005ad54b8.json"
+    start_time= time.time()
     translated_text = translate_text(response_text, language)
+    end_time = time.time()
+    print(f"Conversion took -3 (Translation)-->: {end_time - start_time:.2f} seconds")
     # Initialize Text-to-Speech client
     client = texttospeech.TextToSpeechClient()
 
@@ -75,9 +86,12 @@ def receive_and_return_response(response_text, language="kn-IN"):
     )
 
     # Synthesize the audio response
+    start_time = time.time()
     response = client.synthesize_speech(
         input=input_text, voice=voice, audio_config=audio_config
     )
+    end_time = time.time()
+    print(f"Conversion took -4(TTS) -->: {end_time - start_time:.2f} seconds")
     return response.audio_content
 
 
