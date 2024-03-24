@@ -5,7 +5,9 @@ intents:
   - get_news
   - ask_question
   - schedule_medication
-  - EXTERNAL_reminder_callback
+  - medication_reminder_callback
+  - EXTERNAL_revert
+
 actions:
   - hello_world
   - action_fetch_news
@@ -15,24 +17,26 @@ actions:
   - action_schedule_medication_reminder
 responses:
   utter_time_for_medication:
-    - text: "It's time for your medication."
+    - text: "It is time for your medication."
+  utter_medication_reminder_callback:
+    - text: "Triggering reminder callback"
+slots:
+  reminder_callback_pending:
+    type: bool  # Assuming you want a boolean slot
+    initial_value: False
+    influence_conversation: true
+
 rules:
   - rule: Schedule medication reminder
     steps:
       - intent: schedule_medication
       - action: action_schedule_medication_reminder
-
-  - rule: reminder callback
+      - action: SlotSet('reminder_callback_pending', True)
+  - rule: reminder_callback
     steps:
-        - intent: EXTERNAL_reminder_callback
-        - action: action_notify_medication
-entities:
-  - reminder_name
-slots:
-  reminder_name:
-    type: text
-    influence_conversation: false
-
-  reminder_content:
-    type: text
-    influence_conversation: false  # modify this according to your requirement
+      - intent: EXTERNAL_revert
+      - condition:
+          - slot_was_set:
+              reminder_callback_pending: True
+      - action: action_notify_medication
+      - action: SlotSet('reminder_callback_pending', None)

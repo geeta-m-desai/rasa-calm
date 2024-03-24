@@ -9,18 +9,23 @@ from actions.translate_text import translate_text
 
 ACTION_ENDPOINT_URL = "http://localhost:5005/webhooks/rest/webhook"
 
+r = sr.Recognizer()
+
 
 def audio_chunk_send_to_rasa(audio_chunk: bytes, sample_rate: int = 44100, sample_width: int = 2,
                              language: Optional[str] = "kn-IN"):
     try:
-        r = sr.Recognizer()
-        audio = sr.AudioData(audio_chunk, sample_rate, sample_width)
         start_time = time.time()
-        text = r.recognize_google(audio, language=language)
+        audio = sr.AudioData(audio_chunk, sample_rate, sample_width)
         end_time = time.time()
         print(f"Conversion took -1(STT)"
               f" -->: {end_time - start_time:.2f} seconds")
+        start_time = time.time()
+        text = r.recognize_google(audio, language=language)
+        end_time = time.time()
 
+        print(f"Conversion took -1.1(STT)"
+              f" -->: {end_time - start_time:.2f} seconds")
         print("Recognized ", text)
         data = {"message": text}
         start_time = time.time()
@@ -68,7 +73,7 @@ def listen_and_send_to_rasa():
 def receive_and_return_response(response_text, language="kn-IN"):
     # Directly set the environment variable within the function
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/geetadesai/Downloads/ultra-palisade-417016-a58005ad54b8.json"
-    start_time= time.time()
+    start_time = time.time()
     translated_text = translate_text(response_text, language)
     end_time = time.time()
     print(f"Conversion took -3 (Translation)-->: {end_time - start_time:.2f} seconds")

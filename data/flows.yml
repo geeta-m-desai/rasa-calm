@@ -24,8 +24,3 @@ flows:
     name: reminder
     steps:
       - action: action_schedule_medication_reminder
-  reminder_callback:
-    description: external reminder callback
-    name: external reminder callback
-    steps:
-      - action: action_notify_medication

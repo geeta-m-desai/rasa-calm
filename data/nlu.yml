@@ -23,14 +23,14 @@ nlu:
       - obtain news
 - intent: schedule_medication
   examples: |
-    - I want to set my daily medication reminder
-    - Please remind me to take my medication
-    - Set a daily reminder for my medication
-- intent: EXTERNAL_reminder_callback
+    - I want to set my daily medication reminder for INSULIN
+    - Please remind me to take INSULIN
+    - Set a daily reminder for my medication on INSULIN
+- intent: EXTERNAL_revert
   examples: |
-    - EXTERNAL reminder callback
-    - EXTERNAL reminder 
-    - EXTERNAL callback
+    - EXTERNAL_revert
+    - rever callback
+    - EXTERNAL: EXTERNAL_revert
 - intent: ask_question
   examples: |
     - ask any question

@@ -17,7 +17,7 @@ class ActionNotifyMedication(Action):
     ) -> list[EventType]:
         try:
             print("ActionNotifyMedication is triggered ----> ")
-            dispatcher.utter_message(template="utter_time_for_medication")
+            dispatcher.utter_message(response="utter_time_for_medication")
             return []
 
         except Exception as e:

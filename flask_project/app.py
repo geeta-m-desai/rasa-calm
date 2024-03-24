@@ -9,6 +9,7 @@ from flask_socketio import SocketIO
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from actions.voice_handling import audio_chunk_send_to_rasa
+from pydub import AudioSegment
 
 app = Flask(__name__)
 CORS(app)
@@ -19,14 +20,15 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 def handle_audio(data):
     audio_data = data["blob"]
     lang = data["language"]
-    print("before emitting audio ...")
+    socketid = data["socketid"]
+    print("before emitting audio ...", socketid)
 
     # Assuming Opus input
     converted_audio = convert_opus_to_wav(audio_data)
 
     audio_response = audio_chunk_send_to_rasa(converted_audio, 44100, 2, lang)
-    socketio.emit('bot_response', {'audio': audio_response})
-    print("after emitting audio ...")
+    socketio.emit('bot_response', {'audio': audio_response,'socketid': socketid})
+    print("after emitting audio ...",socketid)
 
 
 def convert_opus_to_wav(opus_data):

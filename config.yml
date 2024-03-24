@@ -13,7 +13,7 @@ pipeline:
   epochs: 100
   constrain_similarities: true
 - name: EntitySynonymMapper
-
+- name: NLUCommandAdapter
 - name: LLMCommandGenerator
   llm:
     model_name: gpt-4
@@ -24,5 +24,6 @@ pipeline:
 policies:
 - name: FlowPolicy
 - name: rasa_plus.ml.IntentlessPolicy
+  number_of_samples: 5
   nlu_abstention_threshold: 0.2
 assistant_id: 20240223-114328-mitram-cares

@@ -1,8 +1,9 @@
 import datetime
+import pytz
 from typing import Any, Text, Dict, List
-from rasa_sdk import Action
-from rasa_sdk.events import ReminderScheduled
-from rasa_sdk.executor import CollectingDispatcher, Tracker
+from rasa_sdk import Action, Tracker
+from rasa_sdk.events import AllSlotsReset, ReminderScheduled, SlotSet
+from rasa_sdk.executor import CollectingDispatcher
 
 
 class ActionScheduleMedicationReminder(Action):
@@ -13,24 +14,23 @@ class ActionScheduleMedicationReminder(Action):
             self,
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
-            domain: Dict[Text, Any],
+            domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
         try:
             dispatcher.utter_message("I will remind you in 5 seconds.")
 
-            date = datetime.datetime.now() + datetime.timedelta(minutes=1)
-            entities = tracker.latest_message.get("entities")
-            print("entities ===> ", entities)
-
+            calcutta = pytz.timezone('Asia/Calcutta')
+            date = datetime.datetime.now(calcutta) + datetime.timedelta(seconds=10)
             reminder = ReminderScheduled(
-                "EXTERNAL_reminder_callback",
+                "EXTERNAL_revert",
                 trigger_date_time=date,
-                entities=entities,
-                name="my_reminder",
+                name="medication_reminder",
                 kill_on_user_message=False,
+                timestamp=datetime.datetime.now(calcutta).timestamp()
             )
             print("reminder ===> ", reminder)
-            return [reminder]
+            return [reminder, SlotSet('reminder_callback_pending', True)]
+
         except Exception as e:
-            dispatcher.utter_message(text=f"An exception occurred: {str(e)}")
+            print("execution exception --->  ", e)
             return []
